@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Dual.h"
 
 // I should really make these all inline and move them into the header.
