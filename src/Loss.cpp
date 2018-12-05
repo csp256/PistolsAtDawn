@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Loss.h"
 
 namespace PistolsAtDawn {
@@ -7,9 +6,8 @@ namespace PistolsAtDawn {
 Loss::Dual
 Loss::operator () (const float x_) const
 {
-	//Dual x = Dual(x_, 0);
-	//return x * inv_c2 * pow(x * x * inv_c2b + 1.f, d_exp);
-	return Dual(x_);
+	Dual x = Dual(x_, 0);
+	return x * inv_c2 * pow(x * x * inv_c2b + 1.f, d_exp);
 }
 
 }
