@@ -2,7 +2,15 @@
 
 Easy optimization framework with explicitly vectorized automatic differentiation. 
 
-Think of it as "Ceres-light". Only dependency is Eigen.
+Think of it as "Ceres-light". The only dependency is Eigen, so installation is painless.
+
+Fitting a model to data is as simple as writing a function to compute the residual (error). See the example on sphere-fitting.
+
+# Features
+
+* Robustified Gauss-Newton, as per "Bundle Adjustment, A Modern Synthesis"
+* Barron loss function.
+* to be continued
 
 # Design Philosophy
 
@@ -11,6 +19,14 @@ Think of it as "Ceres-light". Only dependency is Eigen.
 3. Default behavior should be user friendly, but flexible and configurable.
 4. Autodiff functionality should stand alone and be very high performance.
 5. Introduce advanced features with pedagogy and erudition in mind.
+
+# Automatic Differentiation
+
+The forward mode, dual number approach is used. 
+
+All operations involving the dual part are explicitly vectorized using SSE. 
+
+Currently, only single precision is supported for model evaluation, but this will change. I will replace the SSE intrinsics with a SIMD wrapper (taking suggestions!) to enable AVX, NEON, double precision, etc. 
 
 # License
 
