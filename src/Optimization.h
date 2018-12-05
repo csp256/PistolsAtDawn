@@ -79,7 +79,9 @@ struct Optimizer
 
 				const auto loss = barron_loss((float) DeltaZ_W_DeltaZ);
 				g -= loss.Primal() * J_row.transpose() * W * DeltaZ;
-				H += J_row.transpose() * (loss.Primal() * W + 2 * loss.Partial(0) * W_DeltaZ * W_DeltaZ ) * J_row;
+				// See note about "rescaled residual and Jacobian" 
+				// under "LossFunction" in Ceres documentation.
+				H += J_row.transpose() * (loss.Primal() * W /* + 2 * loss.Partial(0) * W_DeltaZ * W_DeltaZ */) * J_row;
 			} // loop over data
 
 			Eigen::BDCSVD<Eigen::Matrix<Type, -1, -1>> solver(H, Eigen::ComputeFullU | Eigen::ComputeFullV);
