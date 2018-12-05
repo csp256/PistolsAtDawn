@@ -1,8 +1,24 @@
-#include "stdafx.h"
-
 #include "Sphere.h"
-#include "Optimization.h"
 #include "SyntheticData.h"
+#include "Optimization.h"
+
+/*
+
+This example fits a sphere of constant radius to a 
+noisy set of 3d points.
+
+In order to fit a different model to different data, 
+all the user must do is create a different class 
+which implements the same operator() as the Sphere
+class does in this example.
+
+On each iteration of the optimization the Optimizer
+object loops over the data and calls that operator()
+function with the current model parameters and one
+column of data matrix. (Each column represents a
+different data point.)
+
+*/
 
 int main()
 {
