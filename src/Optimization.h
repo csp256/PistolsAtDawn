@@ -77,11 +77,24 @@ struct Optimizer
 				const auto W_DeltaZ = W * DeltaZ;
 				const auto DeltaZ_W_DeltaZ = DeltaZ * W_DeltaZ;
 
+				auto InnerTerm = [&]()
+				{
+					const bool negative_curvature =
+						(loss.Partial(0) * DeltaZ_W_DeltaZ) < (-0.5 * loss.Primal());
+
+					if (negative_curvature) {
+						// Unsafe to apply acceleration term without rescaling (see Triggs, eq 11)
+						// so we just set it to 0 as an approximation (I think this is what Ceres does?)
+						return loss.Primal() * W;
+					} else {
+						// Can safely add acceleration term because we have positive curvature
+						return loss.Primal() * W + 2. * loss.Partial(0) * W_DeltaZ * W_DeltaZ;
+					}
+				};
+				
 				const auto loss = barron_loss((float) DeltaZ_W_DeltaZ);
 				g -= loss.Primal() * J_row.transpose() * W * DeltaZ;
-				// See note about "rescaled residual and Jacobian" 
-				// under "LossFunction" in Ceres documentation.
-				H += J_row.transpose() * (loss.Primal() * W /* + 2 * loss.Partial(0) * W_DeltaZ * W_DeltaZ */) * J_row;
+				H += J_row.transpose() * InnerTerm() * J_row;
 			} // loop over data
 
 			Eigen::BDCSVD<Eigen::Matrix<Type, -1, -1>> solver(H, Eigen::ComputeFullU | Eigen::ComputeFullV);
