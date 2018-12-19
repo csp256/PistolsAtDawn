@@ -28,6 +28,20 @@ All operations involving the dual part are explicitly vectorized using SSE.
 
 Currently, only single precision is supported for model evaluation, but this will change. I will replace the SSE intrinsics with a SIMD wrapper (taking suggestions!) to enable AVX, NEON, double precision, etc. 
 
+# Build
+
+You can either copy `src/` to your code or use CMake to build example.
+Ensure you have CMake (>= 3.5) and Eigen3 installed. Then you can type:
+```
+mkdir build && cd build
+cmake ..
+make -j
+```
+and you should expect it to create `./example/sphere_example` that you can run.
+
+This is a draft CMake for quick setup, with partial support for `make install` or embedding as part of other project (with `add_subdirectory`).
+Tested on MacOS/clang and Ubuntu 16.04 gcc5.
+
 # License
 
 Modified MIT. Free for all uses, even commercial, with one caveat:
