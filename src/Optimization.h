@@ -76,7 +76,7 @@ struct Optimizer
 				}
 				const auto W_DeltaZ = W * DeltaZ;
 				const auto DeltaZ_W_DeltaZ = DeltaZ * W_DeltaZ;
-
+				const auto loss = barron_loss((float) DeltaZ_W_DeltaZ);
 				auto InnerTerm = [&]()
 				{
 					const bool negative_curvature =
@@ -91,8 +91,6 @@ struct Optimizer
 						return loss.Primal() * W + 2. * loss.Partial(0) * W_DeltaZ * W_DeltaZ;
 					}
 				};
-				
-				const auto loss = barron_loss((float) DeltaZ_W_DeltaZ);
 				g -= loss.Primal() * J_row.transpose() * W * DeltaZ;
 				H += J_row.transpose() * InnerTerm() * J_row;
 			} // loop over data

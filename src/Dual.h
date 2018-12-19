@@ -1,11 +1,11 @@
 ﻿#pragma once 
 
-//#include <x86intrin.h>
-#include "intrin.h"
+#include <x86intrin.h>
+//#include "intrin.h"
 
 #include <cstring>
+#include <cmath>
 #include <iostream>
-#include "math.h"
 
 namespace PistolsAtDawn {
 
