@@ -1,7 +1,10 @@
 ﻿#pragma once 
 
+#ifdef _MSC_VER
+#include <intrin.h>
+#else
 #include <x86intrin.h>
-//#include "intrin.h"
+#endif
 
 #include <cstring>
 #include <cmath>
