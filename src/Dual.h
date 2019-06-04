@@ -1,11 +1,14 @@
 ﻿#pragma once 
 
-//#include <x86intrin.h>
-#include "intrin.h"
+#ifdef _MSC_VER
+#include <intrin.h>
+#else
+#include <x86intrin.h>
+#endif
 
 #include <cstring>
+#include <cmath>
 #include <iostream>
-#include "math.h"
 
 namespace PistolsAtDawn {
 

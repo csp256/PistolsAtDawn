@@ -1,9 +1,11 @@
 #pragma once
+
+#include <cmath>
 #include "Dual.h"
 
 namespace PistolsAtDawn {
 
-// Implements Barron's loss function 
+// Implements Barron's loss function
 // https://arxiv.org/pdf/1701.03077.pdf
 class Loss
 {
@@ -19,7 +21,7 @@ public:
 		: a{ a }
 		, c{ c }
 	{
-		const auto b = std::abs(2.f - a) + eps;
+		const auto b = std::fabs(2.f - a) + eps;
 		const auto c2 = c * c;
 		const auto d = (a < 0) ? a - eps : a + eps;
 		inv_c2 = 1.f / c2;
